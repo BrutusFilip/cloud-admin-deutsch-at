@@ -2,9 +2,16 @@ import type { Locator, Page } from '@playwright/test'
 import { progressStore } from './data.ts'
 import { expect, localDay, seed, test } from './fixtures.ts'
 
-// Runs in the "mobile" project: 360 × 800, touch.
+// Runs in the phone projects: "mobile" (Chromium, 360 × 800, touch) and, with E2E_BROWSERS=webkit,
+// "mobile-webkit" (iPhone 13, 390 × 664). Limits come from the viewport of the project.
 
 const noSideways = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)
+
+function screen(page: Page) {
+  const size = page.viewportSize()
+  expect(size, 'the project sets a viewport').not.toBeNull()
+  return size as { width: number; height: number }
+}
 
 async function box(locator: Locator) {
   const b = await locator.boundingBox()
@@ -14,9 +21,10 @@ async function box(locator: Locator) {
 
 test('telefon: lekce dotykem s hodnocením v dosahu palce, dialog a složené filtry', async ({ page }) => {
   await page.goto('./')
+  const view = screen(page)
   expect(await noSideways(page)).toBe(true)
   const nav = await box(page.getByRole('navigation', { name: 'Hlavní navigace' }))
-  expect(nav.y + nav.height, 'navigation at the bottom of the screen').toBeGreaterThanOrEqual(799)
+  expect(nav.y + nav.height, 'navigation at the bottom of the screen').toBeGreaterThanOrEqual(view.height - 1)
 
   await page.getByLabel('Téma', { exact: true }).selectOption('career')
   await page.getByRole('button', { name: 'Začít trénink' }).tap()
@@ -43,7 +51,7 @@ test('telefon: lekce dotykem s hodnocením v dosahu palce, dialog a složené fi
   await expect(page.locator('.feedback--error .verdict')).toContainText('Chyba')
   expect(await noSideways(page)).toBe(true)
   const next = await box(page.getByRole('button', { name: 'Pokračovat – karta se vrátí' }))
-  expect(next.y + next.height).toBeLessThanOrEqual(800)
+  expect(next.y + next.height).toBeLessThanOrEqual(view.height)
 
   // A dialog fits the screen and closes by touch.
   await seed(page, progressStore(await localDay(page)), './#/nastaveni')
@@ -52,8 +60,8 @@ test('telefon: lekce dotykem s hodnocením v dosahu palce, dialog a složené fi
   await dialog.evaluate((el) => Promise.all(el.getAnimations().map((a) => a.finished)))
   const d = await box(dialog)
   expect(d.x).toBeGreaterThanOrEqual(0)
-  expect(d.x + d.width).toBeLessThanOrEqual(360)
-  expect(d.y + d.height).toBeLessThanOrEqual(800)
+  expect(d.x + d.width).toBeLessThanOrEqual(view.width)
+  expect(d.y + d.height).toBeLessThanOrEqual(view.height)
   await dialog.getByRole('button', { name: 'Zpět' }).tap()
   await expect(dialog).toHaveCount(0)
 

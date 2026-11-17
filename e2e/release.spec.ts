@@ -40,19 +40,21 @@ test('pod podcestou GitHub Pages se každý pohled otevře přímo i po reloadu'
   for (const file of fonts) expect(file).toMatch(/-(latin|latin-ext)-(wght|opsz)-normal-[\w-]+\.woff2$/)
 })
 
-test('klávesnice: odkaz na obsah, lekce bez myši a dialog s fokusem a klávesou Esc', async ({ page }) => {
+test('klávesnice: odkaz na obsah, lekce bez myši a dialog s fokusem a klávesou Esc', async ({ page, browserName }) => {
   await page.goto('./')
   await page.keyboard.press('Tab')
   await expect(page.getByRole('link', { name: 'Přeskočit na obsah' })).toBeFocused()
   await page.keyboard.press('Enter')
   await expect(page.locator('#main')).toBeFocused()
 
-  const tabTo = async (name: string) => {
+  // Never tab past the end of the page: Firefox then moves the focus into its own UI instead of
+  // starting over at the top of the page, as Chromium and WebKit do in tests.
+  const tabTo = async (name: string, key = 'Tab') => {
     for (let i = 0; i < 60; i++) {
-      await page.keyboard.press('Tab')
+      await page.keyboard.press(key)
       if (await page.evaluate((n) => document.activeElement?.textContent?.trim() === n, name)) return
     }
-    throw new Error(`Tab did not reach "${name}"`)
+    throw new Error(`${key} did not reach "${name}"`)
   }
   await tabTo('Začít trénink')
   const ring = await page.evaluate(() => {
@@ -70,7 +72,8 @@ test('klávesnice: odkaz na obsah, lekce bez myši a dialog s fokusem a kláveso
   await expect(page.locator('.answer-cz')).toBeVisible()
   await page.keyboard.press('3')
   await expect(page.locator('.lesson-position')).toHaveText('Karta 2 z 10')
-  await tabTo('Ukončit lekci')
+  // The exit sits in the lesson header, above the card that now has the focus.
+  await tabTo('Ukončit lekci', 'Shift+Tab')
   await page.keyboard.press('Enter')
   await expect(page.getByRole('heading', { name: 'Lekce ukončena', level: 1 })).toBeFocused()
 
@@ -81,7 +84,9 @@ test('klávesnice: odkaz na obsah, lekce bez myši a dialog s fokusem a kláveso
   const dialog = page.getByRole('dialog', { name: 'Smazat veškerý pokrok?' })
   await expect(dialog.getByRole('button', { name: 'Zpět' })).toBeFocused()
   expect(await page.evaluate(() => document.querySelector('dialog[open]')?.matches(':modal'))).toBe(true)
-  for (let i = 0; i < 4; i++) {
+  // Chromium and WebKit wrap the focus around inside the modal dialog. Firefox moves it from the
+  // last control into its own UI, so there the check stays on the dialog's two controls.
+  for (let i = 0; i < (browserName === 'firefox' ? 1 : 4); i++) {
     await page.keyboard.press('Tab')
     const outside = await page.evaluate(() => {
       const el = document.activeElement
