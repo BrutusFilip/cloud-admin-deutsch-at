@@ -73,8 +73,9 @@ jobs:
       # Builds, then tests the build under the GitHub Pages subpath (playwright.config.ts).
       - run: npm run test:e2e
 
-  # Firefox and WebKit (Safari's engine) have not been checked yet (docs/RELEASE_CHECKLIST.md, Z13).
-  # Their results are reported here without failing the workflow.
+  # Firefox and WebKit (Safari's engine): all tests passed on 2026-11-17 (docs/RELEASE_CHECKLIST.md, P05).
+  # Their results are reported here without failing the workflow. Whether they should become required
+  # is open (PROJECT_STATE.md, O30): then remove continue-on-error and "not required" from the name.
   e2e-other-browsers:
     name: Browser tests (${{ matrix.browser }}, not required)
     runs-on: ubuntu-latest

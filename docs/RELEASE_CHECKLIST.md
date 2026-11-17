@@ -2,9 +2,16 @@
 
 Přehled ověření k první veřejné verzi: co je ověřené, co čeká na ověření a co chybí nebo nefunguje. Aktualizuje se na konci každé etapy spolu s [`PROJECT_STATE.md`](../PROJECT_STATE.md).
 
-**Aktualizováno:** 2026-11-16, etapa 11 (balení a příprava vydání) · **Verze:** 1.0.0, zatím nevydaná · **Prostředí kontrol:** můj cloudový pracovní prostor (Linux; Node 22, 24 a 26; Chromium 153 a Google Chrome for Testing 153 přes Playwright 1.63). Na vašem počítači zatím nic ověřené není.
+**Aktualizováno:** 2026-11-17, etapa 12 (publikace) · **Verze:** 1.0.0, vydaná 2026-11-17 na [brutusfilip.github.io/cloud-admin-deutsch-at](https://brutusfilip.github.io/cloud-admin-deutsch-at/) z repozitáře [BrutusFilip/cloud-admin-deutsch-at](https://github.com/BrutusFilip/cloud-admin-deutsch-at).
 
-**Základ porovnání.** Doslovné znění vašich promptů 1–4 už v této konverzaci nemám, starší části se zhustily. Porovnávám proto se zápisem zadání v [`PLAN.md`](PLAN.md) (kap. 3–5, 8 a 10), s rozhodnutími s původem „zadání“ v `PROJECT_STATE.md` a s doslovným zadáním promptu 5 (portfolio v1.0). Pokud chcete porovnání s původním textem, vložte ho a rozdíly doplním. Zadání etap 6 až 10 mám doslovně; požadavky z etapy 8 jsou R34–R36 a upravené R12, R13, R15 a R24, požadavky z etapy 9 jsou R37–R46 a upravené R18, R26–R28. Závěrečné ověření z etapy 10 je v kap. 12 (V01–V25), upravené jsou R01–R04, R08, R21, R26, R27, R29, R30 a R45. Balení a příprava vydání z etapy 11 jsou v kap. 13 (B01–B14), upravené jsou R01–R04, R29 a R31.
+**Prostředí kontrol:**
+- můj cloudový pracovní prostor: Linux, Node 22, 24 a 26, Chromium 153 a Google Chrome for Testing 153 přes Playwright 1.63;
+- od etapy 12 GitHub Actions: ubuntu-latest, Node 26.13.1, Chromium, Firefox 155 a WebKit 26.6;
+- živá adresa: integrovaný prohlížeč aplikace Claude na vašem Windows (Chromium 156).
+
+Lokální instalace na vašem počítači zatím ověřená není.
+
+**Základ porovnání.** Doslovné znění vašich promptů 1–4 už v této konverzaci nemám, starší části se zhustily. Porovnávám proto se zápisem zadání v [`PLAN.md`](PLAN.md) (kap. 3–5, 8 a 10), s rozhodnutími s původem „zadání“ v `PROJECT_STATE.md` a s doslovným zadáním promptu 5 (portfolio v1.0). Pokud chcete porovnání s původním textem, vložte ho a rozdíly doplním. Zadání etap 6 až 10 mám doslovně; požadavky z etapy 8 jsou R34–R36 a upravené R12, R13, R15 a R24, požadavky z etapy 9 jsou R37–R46 a upravené R18, R26–R28. Závěrečné ověření z etapy 10 je v kap. 12 (V01–V25), upravené jsou R01–R04, R08, R21, R26, R27, R29, R30 a R45. Balení a příprava vydání z etapy 11 jsou v kap. 13 (B01–B14), upravené jsou R01–R04, R29 a R31. Publikace z etapy 12 je v kap. 14 (P01–P12). Upravené jsou R08, R29–R31, B09, B10, B12, Z13 a Z15, nová je závada Z48.
 
 **Stavy:**
 - ✅ ověřeno;
@@ -27,7 +34,7 @@ Přehled ověření k první veřejné verzi: co je ověřené, co čeká na ov�
 |---|---|---|---|---|---|
 | R06 | Navigace Dnes, Procvičování, Pohovor a Slovník, Nastavení v patičce, přepínač CZ/DE, značka vede na Dnes, zpět a vpřed | ✅ | průchod jen přes navigaci (dev, preview, podcesta); patička na 390 a 320 px | 11/11 kroků; odkaz Nastavení je na telefonu viditelný a klikatelný | – |
 | R07 | Neplatné a neznámé adresy | ✅ opraveno v etapě 6 (Z01) | unit test v `router.test.ts`; E2E `addresses`: 5 adres, otevření i reload, odkazy zpět | poškozená sekvence `%` vede na „Položka nenalezena.“ nebo „Pohovor nenalezen.“ s odkazem zpět; neznámá adresa na Dnes; konzole bez chyb | – |
-| R08 | Hash routing pod podcestou repa i v kořeni domény (GitHub Pages) | ✅ | E2E `pages_paths`: `/cloud-admin-deutsch-at/`, `/muj-portfolio-demo/` a kořen; 9 adres, otevření i reload. Od etapy 10 i Playwright v repozitáři (`release.spec.ts`, 11 pohledů, V10). | vše správně, žádná odpověď 4xx ani 5xx | živá adresa po publikaci (Z15) |
+| R08 | Hash routing pod podcestou repa i v kořeni domény (GitHub Pages) | ✅ | E2E `pages_paths`: `/cloud-admin-deutsch-at/`, `/muj-portfolio-demo/` a kořen; 9 adres, otevření i reload. Od etapy 10 i Playwright v repozitáři (`release.spec.ts`, 11 pohledů, V10). Etapa 12: živá adresa, hlavní navigace a obnovení `#/slovnik/access-v-006` (P08). | vše správně, žádná odpověď 4xx ani 5xx | – |
 
 ## 3. Dnes a trénink
 
@@ -92,9 +99,9 @@ Přehled ověření k první veřejné verzi: co je ověřené, co čeká na ov�
 | R26 | Testy a build v rozpočtu ≤ 300 kB gzip | ✅ | `npm test`, `npm run build`, `npm run test:e2e` (etapa 10) | 237 testů prošlo, 1 vynechaný; 23 testů v prohlížeči (V11); JS 68,3 + 114,3 kB gzip, CSS 9,2 + 0,7 kB gzip, HTML 0,9 kB, celkem asi 193 kB. Build je reprodukovatelný (V06). | – |
 | R27 | Přístupnost: klávesnice, viditelný fokus, kontrast, `lang`, `aria-live`, omezené animace | ✅ v Chromiu a Chrome | E2E `keyboard`, `interview_keyboard`, `reduced_motion`, `lesson_state`, `umlaut_caret`, `listening`, `stage9_ui`; axe-core 4.14; `probe2`; výpočet kontrastu (etapa 9) | Axe na 32 obrazovkách v E2E a 33× v auditu bez nálezů. Po reloadu je fokus na zbývající volbě. S `prefers-reduced-motion` se animace vypnou. Kontrast textu ≥ 5,7 : 1, ovládacích prvků ≥ 3,1 : 1 (spočítaný z hodnot). Rozdíly ve volném překladu čtečka nečte jako chybu, úroveň čte jako orientační. Etapa 10: axe na 32 obrazovkách v Chromiu i Chrome bez nálezů (V23), ruční průchod klávesnicí 14 obrazovek bez problému (V24). | čtečka obrazovky (Z13, O26) |
 | R28 | Úzké zobrazení, dlouhá německá slova a speciální znaky | ✅ | E2E `narrow`, `mobile` a `stage9_ui` (320 a 360 px); `wordbreaks.py` (etapa 9) | 11 obrazovek bez vodorovného posuvu; ä ö ü ß a „ “ se zobrazují. Od etapy 9 se dlouhé slovo nerozdělí: na 7 obrazovkách ve 4 šířkách 0 rozdělených slov (dřív 44). | – |
-| R29 | GitHub Pages: `ci.yml` pro pull requesty a push do `main`, ruční `deploy.yml` (zadání v1.0, upřesněné v etapě 11) | ⏳ | actionlint 1.7.12 se shellcheck 0.11.0; E2E `pages_paths`; Playwright v repozitáři; porovnání s aktuální dokumentací Actions (etapa 11, D109) | bez nálezů. CI na pull requestu: lint, typecheck, test, build, testy v Chromiu, nepovinně Firefox a WebKit; nic nenasazuje. Deploy jen ručně z `main`: stejné Node a lockfile, kontroly, build, testy nad tímto buildem, upload, nasazení v `github-pages`, souběh bez rušení. Build funguje pod libovolnou podcestou. | běh na GitHubu po vašem pushi (Z15, O29) |
-| R30 | Prohlížeče a zařízení mimo Chromium | ✅ Google Chrome / ⏳ ostatní | Playwright v repozitáři a E2E (41 scénářů) v Google Chrome for Testing 153 (etapa 10, V12, V13) | Chrome 153: 21/21 testů v repozitáři a 576/576 kontrol E2E. Firefox, Safari a WebKit, Edge, iOS a Android neověřené: Firefox a WebKit v prostředí nejsou a instalovat je nesmím. | Z13: `npx playwright install firefox webkit` a `E2E_BROWSERS=firefox,webkit npm run test:e2e`, nebo úloha `e2e-other-browsers` po pushi |
-| R31 | README pro náboráře a vývojáře; odkaz na demo až po publikaci; licenci volíte vy | ✅ / ⏳ | obsah README (přepsaný v etapě 11), 4 skutečné screenshoty, `docs/QUICKSTART_CS.md` | README: účel, funkce, automatické hodnocení a sebehodnocení, skutečné ukázky, stack, rychlé spuštění, kontroly, podporovaná prostředí podle kontrol, datový tok, ukládání, rozšíření obsahu, nasazení. Odkaz na demo a licence čekají. | O22, O02 (Z15) |
+| R29 | GitHub Pages: `ci.yml` pro pull requesty a push do `main`, ruční `deploy.yml` (zadání v1.0, upřesněné v etapě 11) | ✅ | actionlint 1.7.12 se shellcheck 0.11.0; E2E `pages_paths`; Playwright v repozitáři; porovnání s aktuální dokumentací Actions (etapa 11, D109); běh na GitHubu (etapa 12, P04–P07) | bez nálezů. CI na pull requestu: lint, typecheck, test, build, testy v Chromiu, nepovinně Firefox a WebKit; nic nenasazuje. Deploy jen ručně z `main`: stejné Node a lockfile, kontroly, build, testy nad tímto buildem, upload, nasazení v `github-pages`, souběh bez rušení. Build funguje pod libovolnou podcestou. Na GitHubu 2026-11-17: CI zelené, Deploy úspěšný. | – |
+| R30 | Prohlížeče a zařízení mimo Chromium | ✅ Google Chrome, Firefox, WebKit / ⏳ ostatní | Playwright v repozitáři a E2E (41 scénářů) v Google Chrome for Testing 153 (etapa 10, V12, V13); úloha `e2e-other-browsers` v CI (etapa 12, P05) | Chrome 153: 21/21 testů v repozitáři a 576/576 kontrol E2E. Firefox 155: 21/21 a WebKit 26.6 včetně emulace iPhonu 13: 23/23 (CI, 2026-11-17). Safari na macOS a iOS, Edge a skutečné telefony neověřené. | Z13 |
+| R31 | README pro náboráře a vývojáře; odkaz na demo až po publikaci; licenci volíte vy | ✅ / ⏳ licence | obsah README (přepsaný v etapě 11), 4 skutečné screenshoty, `docs/QUICKSTART_CS.md`; odkaz na demo po ověření živé adresy (etapa 12, P11) | README: účel, funkce, automatické hodnocení a sebehodnocení, skutečné ukázky, stack, rychlé spuštění, kontroly, podporovaná prostředí podle kontrol, datový tok, ukládání, rozšíření obsahu, nasazení, odkaz na živé demo. Licence čeká. | O02 (Z15) |
 | R32 | Soukromí: žádné externí požadavky, jen fiktivní data | ✅ | E2E sledování sítě; `check:content` (e-maily, telefony, veřejné IP, seznam zakázaných výrazů) | žádný požadavek mimo lokální server; kontrola obsahu prošla | – |
 
 ## 11. Rozhraní a přístupnost (etapa 9)
@@ -177,14 +184,38 @@ Všechno běželo 2026-11-16 v dočasných kopiích projektu mimo pracovní slo�
 | B06 | Skripty `dev`, `build`, `preview` | L, Node 26, npm 11 | z čisté kopie `npm run dev` a `npm run preview` (po buildu), `curl`; obsazené porty 5173 a 4173 | server odpoví na výchozím portu; při obsazeném vezme další | ✅ HTTP 200 na `http://localhost:5173/` a `http://localhost:4173/`; obsazený port: `Port 5173 is in use, trying another one...`, pak 5174 a 4174 | – |
 | B07 | Testy v prohlížeči z čisté kopie | L, Cr, Node 26, npm 11 | `CI=1 npm run test:e2e` | 23 testů projde | ✅ 23/23 za 36,7 s | – |
 | B08 | Názvy skriptů v dokumentaci a workflows | L | porovnání `package.json` s README, `docs/README.cs.md`, `docs/QUICKSTART_CS.md`, `ci.yml` a `deploy.yml` | `lint`, `typecheck`, `test`, `build`, `check`, `test:e2e` všude stejně | ✅ shodné; workflows volají `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm run test:e2e` nebo `npx playwright test` nad hotovým buildem | – |
-| B09 | Workflows podle aktuální dokumentace | L | porovnání s dokumentací GitHub Pages a s README a vydáními checkout, setup-node, upload-pages-artifact a deploy-pages; `actionlint` 1.7.12 se shellcheck 0.11.0 | nejnovější hlavní verze, oprávnění, prostředí, návaznost, souběh; CI na pull requestu nic nenasazuje | ✅ checkout v7, setup-node v7, upload-pages-artifact v5, deploy-pages v5. Deploy jen ručně z `PUBLISH_BRANCH`, `needs: build`, `pages: write` a `id-token: write` jen u nasazení, prostředí `github-pages` s adresou, souběh `pages` bez rušení. Kontroly a testy nad buildem před uploadem, bez cache závislostí. actionlint bez nálezů (D109). | běh na GitHubu po pushi (O29) |
-| B10 | Pages podcesta, routování, `BASE_URL` | L, Cr, P | `vite.config.ts`; `grep import.meta.env` v `src/`; testy pod `/cloud-admin-deutsch-at/` (etapa 10, V10) | podcesta odvozená od repozitáře nebo jedno popsané místo | ✅ Nic se nenastavuje: `base: './'` a hash routování fungují pod libovolným názvem. `BASE_URL` (`./`) kód nepoužívá. Pro `BrutusFilip/cloud-admin-deutsch-at` vyjde `https://brutusfilip.github.io/cloud-admin-deutsch-at/`. Jediné místo pro případnou změnu je komentované v `vite.config.ts` (D110). | ověřit živou adresu po nasazení (etapa 12) |
+| B09 | Workflows podle aktuální dokumentace | L | porovnání s dokumentací GitHub Pages a s README a vydáními checkout, setup-node, upload-pages-artifact a deploy-pages; `actionlint` 1.7.12 se shellcheck 0.11.0 | nejnovější hlavní verze, oprávnění, prostředí, návaznost, souběh; CI na pull requestu nic nenasazuje | ✅ checkout v7, setup-node v7, upload-pages-artifact v5, deploy-pages v5. Deploy jen ručně z `PUBLISH_BRANCH`, `needs: build`, `pages: write` a `id-token: write` jen u nasazení, prostředí `github-pages` s adresou, souběh `pages` bez rušení. Kontroly a testy nad buildem před uploadem, bez cache závislostí. actionlint bez nálezů (D109). | ✅ běh na GitHubu v etapě 12 (P04–P07) |
+| B10 | Pages podcesta, routování, `BASE_URL` | L, Cr, P | `vite.config.ts`; `grep import.meta.env` v `src/`; testy pod `/cloud-admin-deutsch-at/` (etapa 10, V10) | podcesta odvozená od repozitáře nebo jedno popsané místo | ✅ Nic se nenastavuje: `base: './'` a hash routování fungují pod libovolným názvem. `BASE_URL` (`./`) kód nepoužívá. Pro `BrutusFilip/cloud-admin-deutsch-at` vyjde `https://brutusfilip.github.io/cloud-admin-deutsch-at/`. Jediné místo pro případnou změnu je komentované v `vite.config.ts` (D110). | ✅ živá adresa ověřená v etapě 12 (P07, P08) |
 | B11 | Soubory ke commitu | L | kopie s `node_modules`, `dist`, `test-results`, `playwright-report`, exportem, `notes.local.md` a `.env`; `git init` a `git add -A` | žádné závislosti, buildy, výstupy testů, exporty ani lokální soubory | ✅ 154 souborů ke commitu, nic nežádoucího; `.npmrc`, `.nvmrc`, oba workflows a lockfile jsou mezi nimi | – |
-| B12 | README pro náboráře a vývojáře | L | obsah, `md_check.py`, 4 screenshoty z produkčního buildu (`readme_shots.py`) | účel, funkce, stack, rychlé spuštění, kontroly, datový tok, ukládání, rozšíření, nasazení, automatické hodnocení a sebehodnocení, prostředí podle kontrol, pravdivé ukázky | ✅ všechny části; ukázky výsledků jsou ty, které ověřují testy; screenshoty s ilustračními daty (1440 × 900 a 390 × 844), 0 chyb v konzoli | odkaz na demo po publikaci (O22) |
+| B12 | README pro náboráře a vývojáře | L | obsah, `md_check.py`, 4 screenshoty z produkčního buildu (`readme_shots.py`) | účel, funkce, stack, rychlé spuštění, kontroly, datový tok, ukládání, rozšíření, nasazení, automatické hodnocení a sebehodnocení, prostředí podle kontrol, pravdivé ukázky | ✅ všechny části; ukázky výsledků jsou ty, které ověřují testy; screenshoty s ilustračními daty (1440 × 900 a 390 × 844), 0 chyb v konzoli | ✅ odkaz na demo doplněný v etapě 12 (P11) |
 | B13 | Návod pro Windows | L | `docs/QUICKSTART_CS.md`; hlášky `EBADENGINE` a obsazeného portu ověřené na Linuxu | složka, Node a npm, instalace, dev server a jeho zastavení, náhled, pokrok, potíže (chybějící `package.json`, Node, port, lockfile), vzdálený server, publikace | ✅ všechny části, 10 řešených potíží, SSH tunel s odlišením adresy serveru a PC, přesné příkazy k publikaci | skutečný běh na Windows (O12) |
 | B14 | Licence | – | hledání rozhodnutí v projektu a zadáních | jen existující oprávněné rozhodnutí | ⏳ rozhodnutí neexistuje, proto bez souboru `LICENSE`; README: „all rights reserved“ | O02, rozhodnete vy |
 
-## 14. Závady podle dopadu
+## 14. Publikace (etapa 12)
+
+Všechno proběhlo 2026-11-17. Kód aplikace se nezměnil a nasazený build je shodný s etapami 10 a 11.
+
+**Prostředí:**
+- **L** a **Cr** jako v kap. 12.
+- **GA**: GitHub Actions, ubuntu-latest (Ubuntu 26.04), Node 26.13.1, prohlížeče Playwright 1.63.
+- **W**: integrovaný prohlížeč aplikace Claude na vašem Windows (Chromium 156). Velikost okna byla emulovaná: 1280 × 900 a 375 × 812 s dotykem.
+
+| ID | Kontrola | Prostředí | Příkaz nebo postup | Očekávání | Výsledek | Zbývající problém |
+|---|---|---|---|---|---|---|
+| P01 | Výchozí stav gitu a GitHubu | L | stav gitu a remotes, `gh auth status` bez tokenů, seznam repozitářů | jednoznačný cíl a viditelnost | ✅ Složka nebyla git repozitář, remotes žádné. `gh` přihlášené jako `BrutusFilip`. Cíl `BrutusFilip/cloud-admin-deutsch-at`, veřejný, podle vašeho zadání (D111). | – |
+| P02 | Soubory k publikaci | L | `git init -b main`, `git add -A`, porovnání s balíkem etapy 11; hledání osobních a interních údajů, tajných hodnot, exportů a lokálních souborů; metadata PNG | jen soubory projektu | ✅ 154 souborů, stejné jako balík etapy 11, nic nežádoucího; screenshoty bez textových metadat | – |
+| P03 | Kontroly před commitem | L, Cr, Node 26.13.0, npm 11.21.2 | `npm run check`, `CI=1 npm run test:e2e` | exit 0 | ✅ 237 testů prošlo, 1 vynechaný; 23/23 v prohlížeči; build shodný s etapou 10 | – |
+| P04 | CI po prvním pushi | GA | push `690451b`, běh 44042153770 | povinné úlohy zelené | ✅ lint, typy, testy, build; Chromium 23/23. Nepovinné ❌: Firefox 20/21 a WebKit 22/23, chyby v testech (P05). | – |
+| P05 | Firefox a WebKit | GA, L, Cr | Oprava testů v `19c3db1` (D112). Lokálně Chromium 23/23, oba změněné soubory třikrát 15/15, telefonní testy s velikostí iPhonu 13 v Chromiu 2/2. CI běh 44043364589. | všechny testy projdou | ✅ všechny 4 úlohy zelené: Chromium 23/23, Firefox 155 21/21, WebKit 26.6 23/23 (počítač i iPhone 13) | Safari na macOS a iOS (Z13); povinnost úloh (O30) |
+| P06 | GitHub Pages | – | Settings → Pages → Source: GitHub Actions | Pages zapnuté | ✅ nastavili jste vy, API relace to odmítla (403); `has_pages: true` | – |
+| P07 | Nasazení | GA | Deploy z `main`, běh 44043735149; po zapnutí Pages znovu jen úloha nasazení | úspěšné nasazení | ✅ Druhý pokus úspěšný, `page_url` https://brutusfilip.github.io/cloud-admin-deutsch-at/, nasazený `19c3db1`. Předtím 2× 404 „Ensure GitHub Pages has been enabled“, kontroly a build vždy ✅. | – |
+| P08 | Assety, navigace a reload na živé adrese | W | síť a konzole; 15 souborů přes `fetch` a SHA-256; Dnes, Procvičování, Pohovor, Slovník; `#/slovnik/access-v-006` a obnovení | vše 200, bez chyb, build shodný | ✅ Při prvním načtení 8 požadavků, všechny HTTP 200 a jen na `brutusfilip.github.io`. Konzole bez zpráv, 15/15 souborů shodných. Navigace s `aria-current`. Po obnovení stejné heslo (HTTP 200). | – |
+| P09 | Lekce se zachováním pokroku | W | „Začít trénink“: 10 karet (6 kartiček, 3 věty, 1 slovosled); obnovení stránky | pokrok po obnovení zůstane | ✅ Souhrn „Prošli jste 10 karet“. Po obnovení 10 karet (schéma 5) s termínem 20. 11. 2026, „Nové 145“ místo 150, „Dokončené lekce 1“. | – |
+| P10 | Pohovor a telefon | W | pohovor „Představení a motivace“ až do souhrnu; na 375 × 812 Dnes, Slovník s filtry, Pohovor a kartička | celý průchod pohovoru; navigace dole, nic se neposouvá do strany | ✅ Vzor „Ilustrační“, 5 otázek sebehodnocení, souhrn 1 z 3. Navigace 752–812 px, bez posunu do strany, „Filtry (2)“, hodnocení 81 px nad navigací. Souhrn procvičení jedné karty ukázal Z48. | skutečný telefon (Z13); Z48 |
+| P11 | README a dokumentace | L | odkaz na demo v `README.md` a `docs/README.cs.md`, prostředí podle P05 a P08; dokumentační commit a jeho CI | odkaz až po ověření | ✅ doplněno po P08–P10; výsledek CI dokumentačního commitu je v závěrečném předání | – |
+| P12 | About repozitáře | – | `gh repo edit --homepage --description` | popis a web dema | ⏳ relace zápis nastavení nesmí (403), krok pro vás je v O31 | O31 |
+
+## 15. Závady podle dopadu
 
 - **P0:** ztráta nebo poškození pokroku.
 - **P1:** blokuje spuštění nebo hlavní studijní průchod.
@@ -204,9 +235,9 @@ Všechno běželo 2026-11-16 v dočasných kopiích projektu mimo pracovní slo�
 | Z10 | P2 | Nastavení: délka tréninku, nejvýše nových karet, kdy ukazovat češtinu, výchozí časovač; tmavý režim (plán E7.3, O10) | – | ❌ | Z03 (splněno v etapě 7), protože nová nastavení mění schéma | po vydání (návrh) |
 | Z11 | P2 | Rozšíření obsahu o další desítky položek k cíli plánu (asi 300); pro tuto verzi rozsah splněn (R24, D86); O07 | `npm run stats:content` | ❌ | Z07 (lekce jako součást obsahu) | po dokončení této verze (D86) |
 | Z12 | P2 | Zdroje k rakouským faktům (O04), druhé doplňující otázky (O19), další případy výzvy a úroveň B1 nebo C1 (O15) | – | ❌ | – | zdroje v etapě 11, zbytek po dokončení této verze |
-| Z13 | P2 | Ověření mimo Chromium: Firefox, WebKit a Safari, Edge, iOS, Android, čtečka obrazovky, skutečné hlasy, skutečná klávesnice telefonu (O12, O18, O26) | – | ⏳ zčásti: Google Chrome 153 ověřený v etapě 10 (V12, V13); pro Firefox a WebKit je připravený příkaz i úloha v CI | – | 11, zařízení vy |
+| Z13 | P2 | Ověření mimo Chromium: Firefox, WebKit a Safari, Edge, iOS, Android, čtečka obrazovky, skutečné hlasy, skutečná klávesnice telefonu (O12, O18, O26) | – | ⏳ zčásti: Google Chrome 153 ověřený v etapě 10 (V12, V13); Firefox 155 a WebKit 26.6 v CI v etapě 12 (P05); živá adresa v Chromiu 156 na Windows (P08–P10). Zbývá Safari na macOS a iOS, Edge, skutečné telefony, čtečka a hlasy. | – | zařízení vy |
 | Z14 | P2 | `PLAN.md` kap. 4 popisuje u Pohovoru původní návrh z E0 (celkové hodnocení s termínem opakování, nahrávka, doporučená otázka), který zadání E5 nahradilo (D41, D44, D45) | ruční porovnání dokumentace s aplikací | ❌ | – | 11 |
-| Z15 | P2 | Publikace: workflow na GitHubu zatím neběžel, chybí odkaz na živé demo a licence (O02, O22) | – | ⏳ | váš push a zapnutí Pages | 11 |
+| Z15 | P2 | Publikace: workflow na GitHubu zatím neběžel, chybí odkaz na živé demo a licence (O02, O22) | – | ✅ zčásti v etapě 12: CI a nasazení proběhly (P04–P07), odkaz na demo je v README (P11). Zbývá licence (O02). | vaše rozhodnutí O02 | 12 |
 | Z16 | P0 | Odevzdaná odpověď se neukládala. Po odchodu z lekce nebo reloadu šlo odpovědět znovu a do pokroku se zapsala až druhá odpověď. | psaní: chybná odpověď → Slovník → Dnes → „Pokračovat v lekci“ → správná odpověď: zapsáno „správně / Umím“, stupeň 1, termín za 3 dny | ✅ opraveno v etapě 7: tah lekce (D64, D65). Unit testy v `lesson.test.ts` a `reload.test.ts`, E2E `lesson_state`. | – | 7 |
 | Z17 | P0 | Tutéž lekci šlo hodnotit ve dvou kartách; hodnocení jedné karty se ztratilo, karta měla v lekci dvě hodnocení | lekce otevřená ve dvou kartách, v každé jiné hodnocení téže karty: uloženo jen druhé, `reviews: 2` | ✅ opraveno v etapě 7: jedna zapisující karta (D72). Unit test `tabLock.test.ts`, E2E `two_tabs`. | – | 7 |
 | Z18 | P0, skrytá | Migrace přepsala původní data bez možnosti obnovy; chyba v migraci by pokrok nevratně poškodila | data verze 3 → první změna: původní text v úložišti nikde | ✅ opraveno v etapě 7: validace před migrací a zachování původních dat (D69, D71). Unit testy, E2E `migration`, `migration_v2`, `migration_backup`. | – | 7 |
@@ -239,8 +270,9 @@ Všechno běželo 2026-11-16 v dočasných kopiích projektu mimo pracovní slo�
 | Z45 | P2 | Citovaná němčina v českých poznámkách měla `lang="cs"` | heslo `m365-s-002`, poznámka s „Nachrichtenablaufverfolgung“ | ✅ opraveno v etapě 9 (D100), 4 unit testy, E2E `stage9_ui` | – | 9 |
 | Z46 | P2 | Nízký telefon: odkrytý význam kartičky zůstal pod přilepenou lištou hodnocení a verdikt gramatické úlohy se posunul nad horní okraj. Týká se výšky do asi 560 px, například iPhonu SE v Safari s lištami (375 × 553). | 375 × 553, dotyk: „Odkrýt řešení“ → význam na y = 343–373 px, lišta od 312 px. Mezera s chybným *wurden* → verdikt na y = −43 px. | ✅ opraveno v etapě 10: `showResult` počítá s lištou karty i spodní navigací (D103). Test `mobile.spec.ts` předtím selhal, teď prošel; měření na 10 velikostech, Python E2E 576/576. | – | 10 |
 | Z47 | P2 | Hlášení importu při chybě zápisu a v kartě jen pro čtení opakovalo stejnou větu dvakrát | Nastavení → `setItem` vyhazuje → import → „Nahradit pokrok“: „Zápis se nepodařil, pokrok zůstal beze změny. Pokrok v tomto prohlížeči zůstal beze změny.“ | ✅ opraveno v etapě 10 (CZ i DE): „Zápis se nepodařil. Pokrok v tomto prohlížeči zůstal beze změny.“ Nový test v `backup.spec.ts` ověří i smazání při chybě úložiště. | – | 10 |
+| Z48 | P2 | Tvar slova „karta“ u počtu 1 až 4 ve třech českých větách: souhrn „Prošli jste 1 karta.“ místo „1 kartu“, „Trénink nabídne 1 karta k opakování“ místo „1 kartu“, „Dalších 1–4 karty psaní se odemkne“ místo „Další … se odemknou“. V němčině „Weitere 1 Karte … werden freigeschaltet“. Příčina: funkce `cards()` v `src/i18n/cs.ts` vrací 1. pád, věty potřebují 4. pád nebo jinou shodu. | živá adresa, Slovník → heslo → „Procvičit kartičku“ → hodnocení: „Prošli jste 1 karta.“ (P10) | ❌ nalezeno v etapě 12; neopraveno, aby nasazený build zůstal ověřený (D113) | – | další etapa (návrh) |
 
-**Doporučení k publikaci:** otevřená závada P0 ani P1 nezbývá (naposledy ověřeno v etapě 10, kap. 12; etapa 11 kód aplikace neměnila). Z hlediska ochrany pokroku a hlavního průchodu publikaci nic nebrání; kdy publikovat, rozhodnete vy.
+**Stav po publikaci:** otevřená závada P0 ani P1 nezbývá (ověřeno v etapě 10, kap. 12; etapy 11 a 12 kód aplikace neměnily). Verze 1.0.0 je od 2026-11-17 publikovaná a živá adresa prošla krátkým průchodem (kap. 14). Otevřené P2 jsou hlavně Z48 a rozšíření po vydání.
 
 ### Závislosti mezi opravami
 
@@ -250,9 +282,10 @@ Všechno běželo 2026-11-16 v dočasných kopiích projektu mimo pracovní slo�
 - Z13 a Z14 (etapa 11) běží nad obsahem této verze; rozšíření obsahu (Z11, zbytek Z12) až po dokončení této verze (D86).
 - Z13: Firefox a WebKit spustí stejné testy jako Chromium (`E2E_BROWSERS`, úloha `e2e-other-browsers`); nové testy nejsou potřeba.
 - Rozhraní z etapy 9 je základ pro nová nastavení (Z10, podle návrhu po vydání): skupiny Nastavení a designové hodnoty jsou připravené, tmavý režim by znamenal druhou sadu barev v `tokens.css`.
-- Váš push a zapnutí Pages → Z15.
+- Váš push a zapnutí Pages → Z15 (hotovo v etapě 12, zbývá licence O02).
+- Z48 mění jen texty: oprava, unit test tvarů pro 1 až 5 karet, nové nasazení a kontrola živé adresy.
 
-## 15. Etapy 7 až vydání (návrh)
+## 16. Etapy 7 až vydání (návrh)
 
 Číslování odpovídá vašim promptům:
 1. plán (E0);
@@ -265,9 +298,10 @@ Všechno běželo 2026-11-16 v dočasných kopiích projektu mimo pracovní slo�
 8. výukový obsah a zpětná vazba;
 9. ucelené rozhraní pro veřejnou verzi;
 10. závěrečné ověření před balením;
-11. balení a příprava vydání.
+11. balení a příprava vydání;
+12. publikace.
 
-Zadání etapy 8 přesunulo rozšíření obsahu o další desítky položek až za dokončení této verze (D86). Původní etapy „obsah I“ a „obsah II“ jsem proto přeřadil za vydání. Etapa 9 se podle vašeho zadání věnovala rozhraní a etapa 10 závěrečnému ověření s otázkou, zda je aplikace připravená na balení. Etapa 11 podle vašeho zadání připravila balík a konfiguraci vydání. Publikaci provádíte vy, proto ji vedu jako etapu 12. Studijní průchod a nastavení (Z06, Z07–Z10) jsou rozšíření s dopadem P2, ne podmínka vydání; navrhuji je až po něm. Rozhodnete vy podle dalších promptů.
+Zadání etapy 8 přesunulo rozšíření obsahu o další desítky položek až za dokončení této verze (D86). Původní etapy „obsah I“ a „obsah II“ jsem proto přeřadil za vydání. Etapa 9 se podle vašeho zadání věnovala rozhraní a etapa 10 závěrečnému ověření s otázkou, zda je aplikace připravená na balení. Etapa 11 podle vašeho zadání připravila balík a konfiguraci vydání a etapa 12 aplikaci publikovala. Jako další navrhuji opravu Z48. Studijní průchod a nastavení (Z06, Z07–Z10) jsou rozšíření s dopadem P2; navrhuji je až po vydání. Rozhodnete vy podle dalších promptů.
 
 | Etapa | Obsah | Závady | Hotovo, když |
 |---|---|---|---|
@@ -276,11 +310,12 @@ Zadání etapy 8 přesunulo rozšíření obsahu o další desítky položek až
 | 9 – Ucelené rozhraní pro veřejnou verzi ✅ | designové hodnoty, hierarchie studijní obrazovky, Dnes, slovník, pohovor, nastavení, stav ukládání, dialog s fokusem, stavy prvků, přístupnost, texty CZ/DE, 3 rozlišení, zvětšení, klávesnice, jedna ruka | Z30–Z45 | hotovo 2026-11-12: R37–R46 ✅ v Chromiu, E2E 576/576, audit 42 obrazovek × 3 rozlišení |
 | 10 – Závěrečné ověření před balením ✅ | lint, typy, data, cílené testy, reprodukovatelný build, Playwright v repozitáři, 8 skupin průchodů pod Pages podcestou, Chrome, soubory buildu, závislosti, úniky, přístupnost a klávesnice | Z46, Z47 | hotovo 2026-11-16: V01–V25 ✅, Python E2E 576/576 v Chromiu i Chrome, testy v repozitáři 23/23; připraveno na balení |
 | 11 – Balení a příprava vydání ✅ | Node 26 LTS v projektu i CI, `engine-strict`, čistá instalace v dočasných kopiích, README pro náboráře a vývojáře se screenshoty, `docs/QUICKSTART_CS.md`, workflows podle aktuální dokumentace, Pages podcesta, soubory ke commitu | – | hotovo 2026-11-16: B01–B13 ✅, B14 čeká na vás |
-| 12 – Publikace (návrh) | vaše rozhodnutí: licence (O02), číslo verze a čas publikace; váš push a zapnutí Pages; výsledek CI včetně Firefoxu a WebKitu; ověření živé adresy; odkaz na demo v README (O22); zdroje k rakouským faktům a úprava kap. 4 PLAN podle dohody | Z12 (zdroje), Z13–Z15 | CI zelené, živá adresa projde kontrolou V10, R29–R31 ✅ |
+| 12 – Publikace ✅ | repozitář, kontrola souborů, první commit a push, CI včetně Firefoxu a WebKitu, oprava dvou testů, Pages, nasazení, krátký průchod živou adresou, odkaz na demo v README | Z13 (zčásti), Z15 (zčásti), nová Z48 | hotovo 2026-11-17: P01–P11 ✅, P12 a licence čekají na vás; R29 a R30 ✅, R31 ✅ až na licenci |
+| další (návrh) – Oprava Z48 a body po vydání | tvary „karta“ u 1 až 4, test, nové nasazení a kontrola živé adresy; zdroje k rakouským faktům a úprava kap. 4 PLAN podle dohody | Z48, Z12 (zdroje), Z14 | `npm run check`, testy v prohlížeči, živá adresa |
 | po vydání (návrh) – Studijní průchod a nastavení | lekce s cílem a rozcvičkou, pohovorová otázka na konci tréninku, kontext ve slovníku a filtr stavu, nastavení tréninku, připomínka zálohy, případně tmavý režim | Z06 (zbytek), Z07–Z10 | průchod Dnes → lekce → otázka → souhrn v E2E; migrace na nové schéma |
 | po dokončení této verze – Rozšíření obsahu | další desítky položek k cíli plánu, druhé doplňující otázky, další výzvy a úrovně | Z11, zbytek Z12 | `check:content`, ruční redakční průchod, `stats:content` |
 
-## 16. Jak to ověříte lokálně
+## 17. Jak to ověříte lokálně
 
 Ve složce `cloud-admin-deutsch-at/` (Node.js 22.12 nebo novější):
 
@@ -298,6 +333,14 @@ npx playwright install chromium   # jednou: prohlížeč pro testy (asi 170 MB)
 npm run test:e2e         # build a 23 testů v prohlížeči pod podcestou /cloud-admin-deutsch-at/
 npm run dev              # http://localhost:5173/
 ```
+
+Etapu 12 ověříte na živé adrese https://brutusfilip.github.io/cloud-admin-deutsch-at/:
+
+1. **Načtení:** stránka Dnes se načte; v DevTools → Network mají všechny požadavky stav 200 a konzole je bez chyb.
+2. **Reload:** otevřete `#/slovnik/access-v-006` a stiskněte F5. Zůstane heslo „die Authentifizierungsmethode“.
+3. **Pokrok:** dokončete lekci a stiskněte F5. Dnes ukáže méně nových karet a Nastavení → Statistiky „Dokončené lekce 1“.
+4. **GitHub:** v záložce Actions je u posledního commitu workflow **CI** zelené (4 úlohy) a u **Deploy to GitHub Pages** úspěšné nasazení.
+5. **Z48 před opravou:** otevřete `#/slovnik/career-v-001` → „Procvičit kartičku“ → „Odkrýt řešení“ → „Umím“. Souhrn píše „Prošli jste 1 karta.“
 
 Etapu 11 ověříte takto (Windows, PowerShell; podrobně `docs/QUICKSTART_CS.md`):
 
@@ -366,7 +409,7 @@ Opravy z etapy 6 platí dál:
 - `#/slovnik/%E0%A4%A` ukáže „Položka nenalezena.“;
 - `dist/index.html` otevřený dvojklikem po 3 s napíše, jak aplikaci spustit.
 
-## 17. Historie
+## 18. Historie
 
 - **2026-11-11 · etapa 6:** audit podle zadání. Opravené závady: Z01 (P1) a Z02. Popsané a zařazené do etap: Z03–Z15. Založen tento přehled. Kontroly etapy 6: `npm run check` na Node 22, 24 a 26 exit 0 (170 testů), E2E 378/378, axe na 25 obrazovkách bez nálezů.
 - **2026-11-11 · etapa 7:** spolehlivost studia a uloženého pokroku.
@@ -419,3 +462,10 @@ Opravy z etapy 6 platí dál:
   - Pages podcesta: nic se nenastavuje, jedno popsané místo v `vite.config.ts` (D110).
   - Soubory ke commitu: 154, nic nežádoucího. Licence zůstává otevřená (O02).
   - Nové otevřené body O28 (konec Node 22) a O29 (první běh workflows).
+- **2026-11-17 · etapa 12:** publikace.
+  - Repozitář `BrutusFilip/cloud-admin-deutsch-at`, veřejný, s větví `main`. Založení repozitáře, přístup aplikace Claude a zapnutí Pages jste udělali vy, protože relace tyto kroky nesmí.
+  - První commit `690451b` se 154 soubory balíku etapy 11. Kontroly před commitem: exit 0, 237 testů, 23/23 v prohlížeči.
+  - CI: povinné úlohy zelené hned. Firefox a WebKit selhaly na předpokladech testů; opravené testy jsou v `19c3db1` (D112). Pak všechny 4 úlohy zelené: Firefox 155 21/21, WebKit 26.6 23/23.
+  - Nasazení z `main` (`19c3db1`) úspěšné po zapnutí Pages. Živá adresa: build shodný s ověřeným, krátký průchod bez chyb (P08–P10).
+  - Nalezena Z48 (P2, tvar „karta“ u počtu 1 až 4), oprava v další etapě (D113).
+  - Odkaz na demo v README; About čeká na vás (O31), licence také (O02). Uzavřené body O22 a O29, nové O30 a O31.

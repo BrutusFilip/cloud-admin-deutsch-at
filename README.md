@@ -2,7 +2,7 @@
 
 A static web app for practising German for IT administrator job interviews in Austria: Cloud, Azure, Microsoft 365 and IT System Administrator roles at level B2–C1. It is built for Czech speakers. The study content is Austrian standard German with Czech explanations; the interface is Czech by default and can be switched to German. There is no backend and no account: progress stays in your browser.
 
-**Live demo:** will be added after publication.
+**Live demo:** [brutusfilip.github.io/cloud-admin-deutsch-at](https://brutusfilip.github.io/cloud-admin-deutsch-at/). It starts empty, and your progress stays in your browser.
 
 <p>
   <img src="docs/screenshots/today.png" width="49%" alt="Today screen on a desktop with illustrative progress: the recommended lesson with cards due, new and mastered, the topics, and the optional incident challenge">
@@ -55,6 +55,7 @@ Real results from the app (they are also checked by the tests):
 You need **Node.js 26 LTS** (the version in `.nvmrc`, also used by CI) and npm. Node 22.12+ and 24 work as well. Older versions are refused at install time (`engines` in `package.json` and `engine-strict` in `.npmrc`).
 
 ```bash
+git clone https://github.com/BrutusFilip/cloud-admin-deutsch-at.git
 cd cloud-admin-deutsch-at
 npm ci               # installs exactly the versions in package-lock.json
 npm run dev          # development server: http://localhost:5173/
@@ -91,13 +92,13 @@ The browser tests aim at what could lose progress or block studying: a first les
 
 ## Supported environments
 
-Only what was actually checked (2026-11-16):
+Only what was actually checked (2026-11-16 and 2026-11-17):
 
 | Area | Checked | Not checked yet |
 |---|---|---|
-| Node.js and npm | Clean `npm ci` and `npm run check` on Linux with Node 26.13.0, 24.22.2 and 22.23.4 (npm 10.9.9), and with npm 11.21.2 on Node 24 and 26. Node 20 is refused with `EBADENGINE`. | – |
-| Operating systems | Linux: install, checks, build, browser tests. Windows x64 and macOS arm64: the lockfile resolves their native packages. | A real install on Windows and macOS |
-| Browsers | Chromium 153 and Google Chrome for Testing 153, on a desktop and on emulated phones (320 to 412 px wide) | Firefox, Safari and WebKit, Edge, real phones, screen readers, real speech voices |
+| Node.js and npm | Clean `npm ci` and `npm run check` on Linux with Node 26.13.0, 24.22.2 and 22.23.4 (npm 10.9.9), and with npm 11.21.2 on Node 24 and 26. Node 20 is refused with `EBADENGINE`. GitHub Actions: Node 26.13.1. | – |
+| Operating systems | Linux: install, checks, build, browser tests, also on GitHub Actions (`ubuntu-latest`). Windows x64 and macOS arm64: the lockfile resolves their native packages. Windows: the live site in a Chromium 156 based browser. | A real install on Windows and macOS |
+| Browsers | Chromium 153 and Google Chrome for Testing 153, on a desktop and on emulated phones (320 to 412 px wide). On GitHub Actions all browser tests also pass in Firefox 155 and in WebKit 26.6 (Safari's engine), on a desktop and an emulated iPhone 13. The live site: a short pass in a Chromium 156 based browser on Windows, on a desktop and an emulated phone. | Safari on macOS and iOS, Edge, real phones, screen readers, real speech voices |
 
 ## How data flows
 
@@ -143,7 +144,7 @@ The content rules, in Czech, are in [docs/CONTENT_GUIDE.md](docs/CONTENT_GUIDE.m
 
 Two workflows are included. Both use Node.js from `.nvmrc` and install with `npm ci` from `package-lock.json`.
 
-- **`.github/workflows/ci.yml`** runs on every pull request and every push to `main`: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` and `npm run test:e2e` (Chromium). Firefox and WebKit also run there; their results do not fail the workflow until they have been checked once. CI never deploys.
+- **`.github/workflows/ci.yml`** runs on every pull request and every push to `main`: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` and `npm run test:e2e` (Chromium). Firefox and WebKit run there too: all their tests passed on 2026-11-17, and their results are reported without failing the workflow. CI never deploys.
 - **`.github/workflows/deploy.yml`** is started by hand from the publication branch `main` (`PUBLISH_BRANCH` in the file). It runs the same checks, builds, tests the build in Chromium and uploads exactly that build. A second job deploys it in the `github-pages` environment with `pages: write` and `id-token: write`. Only one deployment runs at a time, and a running one is never cancelled.
 
 To publish:
@@ -152,6 +153,8 @@ To publish:
 2. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
 3. **Actions → Deploy to GitHub Pages → Run workflow** on `main`.
 4. The site is at `https://<account>.github.io/<repository>/`.
+
+The live demo above was deployed this way from `main` on 2026-11-17.
 
 **Base path and routing.** Nothing to configure. The build uses relative asset paths (`base: './'` in `vite.config.ts`) and routes live in the URL hash (`#/slovnik/…`). So the site works under any repository name, at a domain root and on any static server. A reload of any view requests only `index.html`, and no 404 fallback is needed. The build was checked under `/cloud-admin-deutsch-at/`, under another repository name and at a domain root, with every view opened directly and reloaded. Only a switch to path-based routes would need an absolute `base` in `vite.config.ts` and a `404.html` fallback.
 

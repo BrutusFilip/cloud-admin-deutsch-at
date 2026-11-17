@@ -8,7 +8,15 @@ Návod spustí Cloud Admin Deutsch na vašem počítači s Windows 10 nebo 11. P
 
 Doporučené místo je `$HOME\Projects\cloud-admin-deutsch-at`, tedy `C:\Users\<vaše jméno>\Projects\cloud-admin-deutsch-at`. Složka `Projects` ve vašem profilu už existuje.
 
-Zip ze složky Stažené soubory rozbalte takto:
+**Od publikace (2026-11-17) je nejlepší repozitář naklonovat.** Dostanete nejnovější stav a můžete rovnou commitovat a pushovat:
+
+```powershell
+git clone https://github.com/BrutusFilip/cloud-admin-deutsch-at.git "$HOME\Projects\cloud-admin-deutsch-at"
+Set-Location "$HOME\Projects\cloud-admin-deutsch-at"
+Test-Path .\package.json
+```
+
+Bez gitu můžete zip ze složky Stažené soubory rozbalit takto. Zip z etapy 11 obsahuje stav před publikací.
 
 ```powershell
 Expand-Archive -Path "$HOME\Downloads\cloud-admin-deutsch-at-etapa-11.zip" -DestinationPath "$HOME\Projects"
@@ -214,9 +222,28 @@ Ukončení: `Ctrl+C` v okně se serverem i v okně s tunelem. Přepínač `--hos
 
 **Moje pracovní prostředí** (cloudový prostor, ve kterém projekt připravuji) z vašeho počítače dosažitelné není a žádný port z něj neotevírám. Schválený způsob, jak build vidět bez instalace, je náhled v Claude (odkaz posílám v chatu). Stahování exportu v něm nefunguje.
 
-## 10. Publikace na GitHubu (provedete vy)
+## 10. GitHub: repozitář a nasazení
 
-Hodnoty: účet `BrutusFilip` (podle připojeného GitHubu), repozitář `cloud-admin-deutsch-at` (zatím neexistuje), větev `main`. Očekávaná adresa: `https://brutusfilip.github.io/cloud-admin-deutsch-at/`. Pokud publikujete pod jiným účtem nebo názvem, nahraďte je v příkazech; v projektu se nic měnit nemusí.
+**Stav od 2026-11-17:**
+- Repozitář: https://github.com/BrutusFilip/cloud-admin-deutsch-at, veřejný, větev `main`.
+- Živé demo: https://brutusfilip.github.io/cloud-admin-deutsch-at/
+
+**Práce s repozitářem:**
+- Na svém počítači pracujte v klonu (kap. 1). Změny odešlete takto:
+
+  ```powershell
+  git add .
+  git status
+  git commit -m "Popis změny"
+  git push
+  ```
+
+  Když git hlásí `Please tell me who you are`, nastavte identitu, viz krok 3 níže.
+- **Složku ze zipu do tohoto repozitáře nepushujte** přes `git init`. Vznikla by historie bez vztahu k té na GitHubu a GitHub by push odmítl.
+- **Nové nasazení:** **Actions → Deploy to GitHub Pages → Run workflow**, větev `main`. Změny jen v dokumentaci nasazovat nemusíte.
+- **About repozitáře** (popis a odkaz na demo) nastavíte na stránce repozitáře přes ozubené kolečko u **About**. Hodnoty jsou v `PROJECT_STATE.md`, bod O31.
+
+Postup níže je původní postup pro **nový** repozitář, například pod jiným účtem nebo názvem. Hodnoty: účet `BrutusFilip`, repozitář `cloud-admin-deutsch-at`, větev `main`. Pokud publikujete jinde, nahraďte je v příkazech; v projektu se nic měnit nemusí.
 
 1. Na GitHubu vytvořte prázdný **veřejný** repozitář `cloud-admin-deutsch-at`, bez README, licence a `.gitignore`.
 2. V PowerShellu:

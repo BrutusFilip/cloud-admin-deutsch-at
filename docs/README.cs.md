@@ -2,7 +2,7 @@
 
 Statická webová aplikace pro trénink němčiny na IT pohovory v Rakousku: Cloud Administrator, Azure Administrator, Microsoft 365 Administrator a IT System Administrator. Je součástí projektu Cloud Admin Journey in Austria.
 
-Verze 1.0 · anglický přehled pro GitHub: [README.md](../README.md) · stav a další kroky: [PROJECT_STATE.md](../PROJECT_STATE.md) · stav požadavků a závad: [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) · plán: [PLAN.md](PLAN.md)
+Verze 1.0 · živé demo: [brutusfilip.github.io/cloud-admin-deutsch-at](https://brutusfilip.github.io/cloud-admin-deutsch-at/) · anglický přehled pro GitHub: [README.md](../README.md) · stav a další kroky: [PROJECT_STATE.md](../PROJECT_STATE.md) · stav požadavků a závad: [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) · plán: [PLAN.md](PLAN.md)
 
 ## Co umí
 
@@ -51,7 +51,12 @@ npm run dev        # http://localhost:5173/
 | `npm run check` | lint, typy, testy a build najednou |
 | `npm run test:e2e` | build a testy produkčního buildu v prohlížeči pod podcestou GitHub Pages (Playwright, Chromium na počítači a telefonu); poprvé `npx playwright install chromium` |
 
-**Ověřené prohlížeče** (2026-11-16, Linux): Chromium 153 a Google Chrome for Testing 153, na počítači i v emulaci telefonu. Firefox, Safari (WebKit), Edge a skutečné telefony zatím ověřené nejsou.
+**Ověřené prohlížeče:**
+- 2026-11-16, Linux: Chromium 153 a Google Chrome for Testing 153, na počítači i v emulaci telefonu.
+- 2026-11-17, GitHub Actions: všechny testy v prohlížeči prošly i ve Firefoxu 155 a ve WebKitu 26.6 (jádro Safari), na počítači i v emulaci iPhonu 13.
+- 2026-11-17, živá adresa: krátký průchod v prohlížeči s jádrem Chromium 156 na Windows, na počítači i v emulaci telefonu.
+
+Safari na macOS a iOS, Edge a skutečné telefony zatím ověřené nejsou.
 
 Aplikace musí běžet z webového serveru: `npm run dev`, `npm run preview` nebo GitHub Pages. Soubor `dist/index.html` otevřený přímo z disku prohlížeč zablokuje a stránka asi po 3 s napíše, jak aplikaci spustit.
 
@@ -174,6 +179,8 @@ Postup pro přidání obsahu popisuje [CONTENT_GUIDE.md](CONTENT_GUIDE.md).
 3. Workflow `.github/workflows/ci.yml` zkontroluje každý pull request a push do `main` (`npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm run test:e2e`). Nic nenasazuje.
 4. Nasazení spustíte ručně: **Actions → Deploy to GitHub Pages → Run workflow** (větev `main`). Workflow `.github/workflows/deploy.yml` se stejnou verzí Node a lockfilem provede kontroly, build a testy v prohlížeči a nasadí právě tento `dist/` do prostředí `github-pages`. Z jiné větve nenasadí. Automatické nasazení po každém pushi zapnete podle komentáře v souboru.
 5. Aplikace poběží na `https://<účet>.github.io/<repozitář>/`. Díky relativním cestám a hash adresám funguje pod libovolným názvem repozitáře a podcestu nikde nastavovat nemusíte. Přesné příkazy pro váš projekt jsou v [QUICKSTART_CS.md](QUICKSTART_CS.md), kap. 10.
+
+Takto je aplikace od 2026-11-17 publikovaná z větve `main` repozitáře [BrutusFilip/cloud-admin-deutsch-at](https://github.com/BrutusFilip/cloud-admin-deutsch-at) na [brutusfilip.github.io/cloud-admin-deutsch-at](https://brutusfilip.github.io/cloud-admin-deutsch-at/).
 
 ## Licence
 
