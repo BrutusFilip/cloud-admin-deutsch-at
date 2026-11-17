@@ -1,0 +1,44 @@
+{
+  "name": "cloud-admin-deutsch-at",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static app for practising German for IT admin job interviews in Austria (Cloud, Azure, Microsoft 365, IT System Administrator).",
+  "type": "module",
+  "engines": {
+    "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "oxlint",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "test:answers": "vitest run src/domain/answerCheck src/domain/grammar",
+    "test:scheduler": "vitest run src/domain/scheduler src/domain/lesson src/domain/localDay src/domain/progressViews",
+    "test:reload": "vitest run src/storage/reload src/storage/persistence src/state/tabLock",
+    "test:stats": "vitest run src/domain/stats src/domain/challenge src/domain/interview",
+    "test:import": "vitest run src/storage/backup",
+    "test:e2e": "npm run build && playwright test",
+    "check:content": "vitest run src/content",
+    "stats:content": "vitest run src/content/stats.test.ts --mode stats --silent=false",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build"
+  },
+  "dependencies": {
+    "@fontsource-variable/atkinson-hyperlegible-next": "^5.3.0",
+    "@fontsource-variable/literata": "^5.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "oxlint": "^1.89.0",
+    "typescript": "~7.0.2",
+    "vite": "^8.3.5",
+    "vitest": "^5.1.0"
+  }
+}

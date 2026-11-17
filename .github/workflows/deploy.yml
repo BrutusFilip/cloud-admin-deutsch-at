@@ -1,0 +1,92 @@
+# Deploy to GitHub Pages. Started by hand: Actions → "Deploy to GitHub Pages" → Run workflow,
+# from the publication branch (PUBLISH_BRANCH below). Pull requests never deploy.
+#
+# The build job runs the same checks as CI with the same Node.js version (.nvmrc) and lockfile
+# (npm ci), tests the built site in a browser and uploads exactly that build. The deploy job
+# publishes it in the github-pages environment.
+#
+# One-time setup on GitHub:
+#   Settings → Pages → Build and deployment → Source: GitHub Actions.
+#   Settings → Environments → github-pages → Deployment branches: the publication branch must be allowed
+#   (GitHub allows the default branch when it creates the environment).
+#
+# Base path: nothing to set. vite.config.ts builds with relative asset paths (base './') and the app
+# routes in the URL hash, so the site works at https://<account>.github.io/<repository>/ under any
+# repository name, and a reload of any view requests only index.html.
+#
+# To deploy automatically after every push to the publication branch, add under "on:"
+#   push:
+#     branches: [main]
+name: Deploy to GitHub Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment at a time; a running deployment is never cancelled, a newer run waits for it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  # The only branch that may publish. If you change it, allow it in the github-pages environment too.
+  PUBLISH_BRANCH: main
+  # Folder of the app inside the repository ("." = repository root, as delivered); see ci.yml.
+  APP_DIR: .
+
+jobs:
+  build:
+    name: Check and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: ${{ env.APP_DIR }}
+    steps:
+      - name: Only the publication branch deploys
+        if: github.ref_name != env.PUBLISH_BRANCH
+        working-directory: ${{ github.workspace }}
+        run: |
+          echo "::error::Start this workflow from the branch '${PUBLISH_BRANCH}' (it was started from '${GITHUB_REF_NAME}')."
+          exit 1
+
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: ${{ env.APP_DIR }}/.nvmrc
+          # A release build starts from the lockfile alone, without restored caches.
+          package-manager-cache: false
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+      - run: npx playwright install --with-deps chromium
+      - name: Browser tests of this build
+        run: npx playwright test
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: ${{ env.APP_DIR }}/dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

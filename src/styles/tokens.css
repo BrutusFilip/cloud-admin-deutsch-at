@@ -1,0 +1,99 @@
+/*
+ * Design values – "school ink on cool paper".
+ * The whole interface is built from these values; app.css uses no other colours,
+ * spacings, widths, radii or focus styles.
+ *
+ * One accent: Königsblau (royal-blue ink) for actions, the current state and focus.
+ * Red is reserved for corrections and destructive actions, always with a word or a mark.
+ * German learning text is set in Literata, the interface in Atkinson Hyperlegible Next.
+ *
+ * Contrast (WCAG 2.2, computed from these values; the table is in PROJECT_STATE, stage 9):
+ *   text   ink 15.8 / 17.2 on paper / sheet, 14.6 on blue-tint; graphite 7.2 / 7.8, 6.6 on blue-tint;
+ *          blue 7.5 / 8.2, 6.9 on blue-tint; white on blue 8.2; red 6.0 / 6.5, 5.7 on red-tint
+ *   UI     line (control borders) 3.3 on paper, 3.7 on sheet, 3.1 on blue-tint; blue focus ring 7.5 / 8.2
+ */
+:root {
+  color-scheme: light;
+
+  /* ---- Colour ---- */
+  --paper: #f3f5f8; /* page background */
+  --sheet: #ffffff; /* cards and fields */
+  --ink: #161a2c; /* text */
+  --graphite: #4a5266; /* secondary text */
+  --rule: #d5dae3; /* dividers and card outlines (decorative) */
+  --line: #7d869a; /* borders of controls: at least 3:1 on paper and sheet */
+  --blue: #2343b8; /* the one accent */
+  --blue-strong: #1a3496; /* hover and pressed accent */
+  --blue-tint: #e8ecfa; /* accent background (correct, current, selected) */
+  --red: #b4232a; /* corrections and destructive actions only */
+  --red-strong: #8f1b21;
+  --red-tint: #fcebec;
+  --blue-mark: rgb(35 67 184 / 0.2); /* highlight behind a corrected letter */
+  --backdrop: rgb(22 26 44 / 0.55); /* behind a modal dialog (ink, translucent) */
+  --shadow-float: 0 6px 20px rgb(22 26 44 / 0.18); /* only for the one floating notice */
+
+  /* ---- Typography ---- */
+  --font-ui: 'Atkinson Hyperlegible Next Variable', 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-de: 'Literata Variable', Literata, Charter, 'Sitka Text', Cambria, Georgia, serif;
+
+  /* Scale with a ratio of about 1.2; the German prompt grows with the viewport. */
+  --step--2: 0.8125rem;
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: 1.5rem;
+  --step-3: 1.875rem;
+  --step-4: clamp(2rem, 1.35rem + 2.8vw, 2.75rem);
+  --step-answer: clamp(1.375rem, 1.1rem + 1.2vw, 1.75rem);
+
+  --leading-tight: 1.15;
+  --leading-heading: 1.25;
+  --leading-de: 1.45;
+  --leading-body: 1.55;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ---- Space: a 4 px grid (n × 0.25 rem) ---- */
+  --space-half: 0.125rem;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 1.75rem;
+  --space-8: 2rem;
+  --space-9: 2.25rem;
+  --space-12: 3rem;
+
+  /* ---- Width ---- */
+  --width-shell: 72rem; /* header, footer and two-column pages on wide screens */
+  --width-page: 44rem; /* one-column pages: lesson, interview, entry */
+  --width-text: 40rem; /* running text */
+  --width-narrow: 24rem; /* single buttons and short fields */
+  --gutter: var(--space-4);
+  --sheet-padding: clamp(var(--space-4), 3.5vw, var(--space-9));
+
+  /* ---- Borders ---- */
+  --border: 1px solid var(--rule);
+  --border-control: 1px solid var(--line);
+  --bar: 4px; /* coloured edge of feedback and banners */
+  --radius: 12px;
+  --radius-small: 8px;
+  --radius-xs: 4px;
+  --radius-pill: 999px;
+
+  /* ---- Focus ---- */
+  --focus-ring: 3px solid var(--blue);
+  --focus-offset: 3px;
+  --focus-offset-inside: -3px;
+
+  /* ---- Interaction ---- */
+  --tap: 2.75rem; /* 44 px: smallest touch target */
+  --tap-small: 2.25rem; /* compact buttons with a mouse; 44 px on touch screens */
+  --nav-height: 3.75rem;
+  --duration: 0.18s;
+}

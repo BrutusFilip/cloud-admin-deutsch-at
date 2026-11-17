@@ -1,0 +1,34 @@
+# Dependencies and build output
+node_modules
+dist
+dist-ssr
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Local-only files: private notes, local deny-list for the content check
+*.local
+*.local.*
+
+# Progress exports and raw copies of the browser storage contain your own
+# progress and interview examples – never commit them
+cloud-admin-deutsch-progress-*.json
+cloud-admin-deutsch-stored-data-*.json
+
+# Environment files, test and coverage output
+.env
+.env.*
+coverage
+playwright-report
+test-results
+
+# Editor and OS files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+*.suo
+*.sw?

@@ -1,0 +1,172 @@
+import type { StudyItem } from '../../domain/types'
+
+export const career: StudyItem[] = [
+  {
+    id: 'career-v-001',
+    kind: 'noun',
+    topic: 'career',
+    level: 'B2',
+    de: 'die Kündigungsfrist',
+    gender: 'f',
+    plural: 'die Kündigungsfristen',
+    cz: 'výpovědní lhůta',
+    example: {
+      de: 'Meine Kündigungsfrist beträgt zwei Monate, daher könnte ich frühestens im Frühjahr beginnen.',
+      cz: 'Moje výpovědní lhůta jsou dva měsíce, proto bych mohl(a) nastoupit nejdřív na jaře.',
+    },
+    noteCz: 'betragen (činit): beträgt – betrug – hat betragen. Nejdřívější možný nástup = der frühestmögliche Eintritt.',
+  },
+  {
+    id: 'career-v-002',
+    kind: 'noun',
+    topic: 'career',
+    level: 'B2',
+    de: 'die Gehaltsvorstellung',
+    gender: 'f',
+    plural: 'die Gehaltsvorstellungen',
+    cz: 'představa o platu',
+    example: {
+      de: 'Darf ich Sie nach Ihrer Gehaltsvorstellung fragen?',
+      cz: 'Mohu se vás zeptat na vaši představu o platu?',
+    },
+    noteCz: 'Často i v plurálu: Was sind Ihre Gehaltsvorstellungen? Odpověď: Meine Vorstellung liegt bei … brutto pro Jahr. Částku si doplňte sami.',
+  },
+  {
+    id: 'career-s-001',
+    kind: 'sentence',
+    topic: 'career',
+    level: 'B2',
+    de: 'Ich könnte ab Jänner beginnen.',
+    cz: 'Mohl(a) bych nastoupit od ledna.',
+    example: {
+      de: 'Ich könnte ab Jänner beginnen, da meine Kündigungsfrist im Dezember endet.',
+      cz: 'Mohl(a) bych nastoupit od ledna, protože mi výpovědní lhůta končí v prosinci.',
+    },
+    noteCz: 'Konjunktiv II „ich könnte“ zní zdvořileji než „ich kann“.',
+    atNote: 'Jänner je rakouský standard (v Německu Januar). V Rakousku se říká i „mit Jänner beginnen“.',
+    write: {
+      mode: 'compare',
+      accept: [
+        { text: 'Ich könnte ab Jänner anfangen.' },
+        { text: 'Ich könnte mit Jänner beginnen.' },
+        { text: 'Ich könnte mit Jänner anfangen.' },
+        { text: 'Ich könnte ab Januar beginnen.', noteCz: 'Správně, ale v Rakousku je standardem „Jänner“.' },
+        { text: 'Ich könnte ab Januar anfangen.', noteCz: 'Správně, ale v Rakousku je standardem „Jänner“.' },
+      ],
+    },
+  },
+  {
+    id: 'career-v-003',
+    kind: 'noun',
+    topic: 'career',
+    level: 'B2',
+    de: 'die Rufbereitschaft',
+    gender: 'f',
+    plural: 'die Rufbereitschaften',
+    cz: 'pohotovost (on-call)',
+    example: {
+      de: 'Wie ist die Rufbereitschaft im Team geregelt?',
+      cz: 'Jak je v týmu řešená pohotovost?',
+    },
+    noteCz: 'Při pohotovosti nemusíte být na pracovišti, ale musíte být k zastižení. Hodí se jako otázka na konci pohovoru.',
+  },
+  {
+    id: 'career-s-002',
+    kind: 'sentence',
+    topic: 'career',
+    level: 'B2',
+    de: 'Wie hoch ist das vorgesehene Bruttojahresgehalt für diese Position?',
+    cz: 'Jaká je plánovaná hrubá roční mzda pro tuto pozici?',
+    example: {
+      de: 'Im Inserat steht das Mindestgehalt laut Kollektivvertrag. Wie hoch ist das vorgesehene Bruttojahresgehalt für diese Position?',
+      cz: 'V inzerátu je uvedená minimální mzda podle kolektivní smlouvy. Jaká je plánovaná hrubá roční mzda pro tuto pozici?',
+    },
+    noteCz: 'Věcná a zdvořilá otázka uchazeče. „vorgesehen“ = plánovaný, zamýšlený.',
+    atNote: '„das Inserat“ je rakouský výraz pro inzerát; v Německu spíš „die Stellenanzeige“.',
+    write: {
+      mode: 'compare',
+      accept: [
+        { text: 'Wie hoch ist das vorgesehene Jahresbruttogehalt für diese Position?' },
+        { text: 'Wie hoch ist das geplante Bruttojahresgehalt für diese Position?' },
+      ],
+    },
+  },
+  {
+    id: 'career-s-003',
+    kind: 'sentence',
+    topic: 'career',
+    level: 'B1',
+    de: 'Wie sieht ein typischer Arbeitstag in dieser Rolle aus?',
+    cz: 'Jak vypadá typický pracovní den v této roli?',
+    example: {
+      de: 'Wie sieht ein typischer Arbeitstag aus, und wie viel Zeit entfällt auf Projekte?',
+      cz: 'Jak vypadá typický pracovní den a kolik času připadá na projekty?',
+    },
+    noteCz: '„aussehen“ je odlučitelné: Wie sieht … aus? Dobrá otázka na konci pohovoru.',
+    write: {
+      mode: 'compare',
+      accept: [
+        { text: 'Wie sieht ein typischer Arbeitstag in dieser Position aus?' },
+        { text: 'Wie sieht ein typischer Tag in dieser Rolle aus?' },
+      ],
+    },
+  },
+  {
+    id: 'career-s-004',
+    kind: 'sentence',
+    topic: 'career',
+    level: 'C1',
+    de: 'Ich bin derzeit in einem aufrechten Dienstverhältnis.',
+    cz: 'V současnosti jsem v trvajícím pracovním poměru.',
+    example: {
+      de: 'Ich bin derzeit in einem aufrechten Dienstverhältnis und habe eine Kündigungsfrist von zwei Monaten.',
+      cz: 'V současnosti jsem v trvajícím pracovním poměru a mám dvouměsíční výpovědní lhůtu.',
+    },
+    noteCz: 'Formální odpověď na otázku po dostupnosti. „das Dienstverhältnis“ = pracovní poměr.',
+    atNote: '„aufrecht“ ve významu „trvající, platný“ je rakouský úzus.',
+    write: {
+      mode: 'compare',
+      accept: [
+        { text: 'Ich befinde mich derzeit in einem aufrechten Dienstverhältnis.' },
+        { text: 'Ich bin zurzeit in einem aufrechten Dienstverhältnis.' },
+      ],
+    },
+  },
+  {
+    id: 'career-s-005',
+    kind: 'sentence',
+    topic: 'career',
+    level: 'B2',
+    de: 'Für ein zweites Gespräch hätte ich nächste Woche jederzeit Zeit.',
+    cz: 'Na druhý rozhovor bych měl(a) příští týden kdykoli čas.',
+    example: {
+      de: 'Für ein zweites Gespräch hätte ich am Dienstag oder am Donnerstag Zeit.',
+      cz: 'Na druhý rozhovor bych měl(a) čas v úterý nebo ve čtvrtek.',
+    },
+    noteCz: 'Konjunktiv II „hätte“ zní při domlouvání termínu zdvořileji než „habe“.',
+    write: {
+      mode: 'compare',
+      accept: [
+        { text: 'Nächste Woche hätte ich für ein zweites Gespräch jederzeit Zeit.' },
+        { text: 'Für ein zweites Gespräch hätte ich kommende Woche jederzeit Zeit.' },
+      ],
+    },
+  },
+  {
+    id: 'career-g-001',
+    kind: 'grammar',
+    topic: 'career',
+    level: 'B2',
+    focus: 'konjunktiv',
+    promptCz: 'Doplňte Konjunktiv II slovesa „sein“.',
+    task: { type: 'gap', text: 'Mit einem Bruttojahresgehalt in dieser Größenordnung ___ ich einverstanden.', answers: ['wäre'] },
+    de: 'Mit einem Bruttojahresgehalt in dieser Größenordnung wäre ich einverstanden.',
+    cz: 'S hrubou roční mzdou v tomto řádu bych souhlasil(a).',
+    explanationCz:
+      '„wäre“ (Konjunktiv II od „sein“) zní při jednání o platu otevřeně a zdvořile; „bin“ by znělo jako definitivní souhlas. Po úvodním příslovečném určení stojí sloveso na 2. místě.',
+    example: {
+      de: 'Ein Start im Februar wäre für mich gut möglich.',
+      cz: 'Nástup v únoru by pro mě byl dobře možný.',
+    },
+  },
+]

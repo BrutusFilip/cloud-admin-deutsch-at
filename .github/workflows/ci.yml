@@ -1,0 +1,110 @@
+# CI: checks every pull request and every push to the publication branch (main).
+# Lint, types, unit and content tests, build, and browser tests of that build. It never deploys:
+# publishing is only done by deploy.yml, started by hand.
+#
+# Node.js comes from .nvmrc and packages from package-lock.json (npm ci), the same as in deploy.yml.
+# APP_DIR is the folder of the app inside the repository: "." when the app is the repository root,
+# as delivered. If you move the app into a subfolder, set APP_DIR to that folder in both workflows
+# and keep the workflow files in the repository's .github/workflows/.
+# If your publication branch is not called "main", change it below and in deploy.yml.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  APP_DIR: .
+
+jobs:
+  check:
+    name: Lint, types, tests, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: ${{ env.APP_DIR }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: ${{ env.APP_DIR }}/.nvmrc
+          cache: npm
+          cache-dependency-path: ${{ env.APP_DIR }}/package-lock.json
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+  e2e:
+    name: Browser tests (Chromium)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: ${{ env.APP_DIR }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: ${{ env.APP_DIR }}/.nvmrc
+          cache: npm
+          cache-dependency-path: ${{ env.APP_DIR }}/package-lock.json
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      # Builds, then tests the build under the GitHub Pages subpath (playwright.config.ts).
+      - run: npm run test:e2e
+
+  # Firefox and WebKit (Safari's engine) have not been checked yet (docs/RELEASE_CHECKLIST.md, Z13).
+  # Their results are reported here without failing the workflow.
+  e2e-other-browsers:
+    name: Browser tests (${{ matrix.browser }}, not required)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - browser: firefox
+            projects: --project=firefox
+          - browser: webkit
+            projects: --project=webkit --project=mobile-webkit
+    defaults:
+      run:
+        working-directory: ${{ env.APP_DIR }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: ${{ env.APP_DIR }}/.nvmrc
+          cache: npm
+          cache-dependency-path: ${{ env.APP_DIR }}/package-lock.json
+
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - run: npm run build
+      - run: npx playwright test ${{ matrix.projects }}
+        env:
+          E2E_BROWSERS: ${{ matrix.browser }}
